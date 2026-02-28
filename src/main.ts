@@ -157,6 +157,15 @@ document.getElementById('btn-load-template')?.addEventListener('click', async ()
   }
 });
 
+// Theme Toggle Logic
+document.getElementById('btn-theme-toggle')?.addEventListener('click', () => {
+  const isLight = document.body.classList.toggle('light-mode');
+  const btn = document.getElementById('btn-theme-toggle');
+  if (btn) {
+    btn.textContent = isLight ? '🌙' : '🌓';
+  }
+});
+
 import { invoke } from '@tauri-apps/api/core';
 
 // Open Structura Sub App
