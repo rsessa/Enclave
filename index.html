@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Content Security Policy: Strict Offline mode -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' data: blob:; connect-src 'none'; font-src 'self' data:;" />
+    <title>Enclave - Secure Console</title>
+    <!-- Quill CSS via local file or injected bundle -->
+    <link href="/node_modules/quill/dist/quill.snow.css" rel="stylesheet">
+    <link href="/src/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="app" class="app-container">
+      
+      <!-- Toolbar Area -->
+      <header class="top-toolbar">
+        <div class="brand">
+          <div class="lock-icon">🔒</div>
+          <h1>Enclave</h1>
+        </div>
+        <div class="toolbar-actions">
+          <button id="btn-add-table" class="btn" title="Add Table">⊞</button>
+          <button id="btn-format-log" class="btn" title="Format Selected as Log">≢</button>
+          <div class="divider"></div>
+          <button id="btn-copy" class="btn" title="Copy to Clipboard">📋</button>
+          <div class="divider"></div>
+          <button id="btn-save-template" class="btn" title="Save as Template">💾</button>
+          <button id="btn-load-template" class="btn" title="Load Template">📂</button>
+          <div class="divider"></div>
+          <button id="btn-structura" class="btn btn-accent" title="Launch Structura">S</button>
+        </div>
+      </header>
+      
+      <!-- Tab Strip -->
+      <nav class="tab-strip">
+        <div id="tabs-container" class="tabs">
+          <!-- Dynamic Tabs -->
+        </div>
+        <button id="btn-new-tab" class="btn-new-tab">+</button>
+      </nav>
+      
+      <!-- Editor Area -->
+      <main class="editor-container">
+        <div id="quill-editor"></div>
+      </main>
+      
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

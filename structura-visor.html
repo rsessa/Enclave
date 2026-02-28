@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' data: blob:; connect-src 'none'; font-src 'self' data:;" />
+    <title>Structura - Visor</title>
+    <link href="/src/style.css" rel="stylesheet" />
+    <style>
+      body { padding: 0; margin: 0; background: #ffffff; /* Mermaid visuals best in white */ }
+      .structura-visor-container { display: flex; flex-direction: column; height: 100vh; }
+      .preview-area {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: auto;
+        padding: 1rem;
+      }
+      .toolbar {
+        background: var(--bg-tertiary);
+        padding: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid var(--border-color);
+      }
+      .btn-export {
+        background: var(--accent-base);
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      .btn-export:hover { background: var(--accent-hover); }
+      .error-box {
+        color: red;
+        font-family: var(--font-mono);
+        padding: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="structura-visor-container">
+      <div class="preview-area" id="mermaid-output"></div>
+      <div class="toolbar">
+        <span style="color:var(--text-secondary); font-size: 12px;">Live Preview</span>
+        <button id="btn-export" class="btn-export">Export to Enclave</button>
+      </div>
+    </div>
+    <script type="module" src="/src/structura-visor.ts"></script>
+  </body>
+</html>

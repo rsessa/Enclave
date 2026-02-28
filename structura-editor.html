@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' data: blob:; connect-src 'none'; font-src 'self' data:;" />
+    <title>Structura - Editor</title>
+    <link href="/src/style.css" rel="stylesheet" />
+    <style>
+      body { padding: 0; margin: 0; background: var(--bg-primary); }
+      .structura-editor-container { display: flex; flex-direction: column; height: 100vh; }
+      textarea {
+        flex: 1;
+        width: 100%;
+        resize: none;
+        background: var(--bg-secondary);
+        color: var(--text-accent);
+        border: none;
+        padding: 1rem;
+        font-family: var(--font-mono);
+        font-size: 14px;
+        outline: none;
+      }
+      .toolbar {
+        background: var(--bg-tertiary);
+        padding: 8px;
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 12px;
+        border-bottom: 1px solid var(--border-color);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="structura-editor-container">
+      <div class="toolbar">Mermaid Live Editor</div>
+      <textarea id="mermaid-input" spellcheck="false" placeholder="graph TD\n  A-->B"></textarea>
+    </div>
+    <script type="module" src="/src/structura-editor.ts"></script>
+  </body>
+</html>

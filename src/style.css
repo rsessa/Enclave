@@ -1,0 +1,279 @@
+:root {
+  /* Enclave Premium Dark Engineering Theme */
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #14141e;
+  --bg-tertiary: #1c1c28;
+  --bg-glass: rgba(20, 20, 30, 0.75);
+
+  --text-primary: #f0f0f5;
+  --text-secondary: #a0a0b0;
+  --text-accent: #60a5fa;
+
+  --accent-base: #3b82f6;
+  --accent-hover: #2563eb;
+  --accent-danger: #ef4444;
+
+  --border-color: #2a2a35;
+  --border-glow: rgba(59, 130, 246, 0.3);
+
+  --font-mono: 'Consolas', 'JetBrains Mono', 'Fira Code', monospace;
+  --font-sans: 'Segoe UI', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  height: 100vh;
+  overflow: hidden;
+  user-select: none;
+  /* Desktop app feel */
+}
+
+/* App Layout */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Toolbar */
+.top-toolbar {
+  height: 50px;
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brand h1 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+}
+
+.lock-icon {
+  color: var(--text-accent);
+  text-shadow: 0 0 8px var(--border-glow);
+}
+
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.divider {
+  width: 1px;
+  height: 20px;
+  background-color: var(--border-color);
+  margin: 0 0.5rem;
+}
+
+.btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+}
+
+.btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.btn-accent {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--text-accent);
+  border-color: rgba(59, 130, 246, 0.3);
+  font-weight: bold;
+}
+
+.btn-accent:hover {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+}
+
+/* Tab Strip */
+.tab-strip {
+  display: flex;
+  align-items: flex-end;
+  background-color: var(--bg-primary);
+  border-bottom: 2px solid var(--border-color);
+  height: 40px;
+  padding: 0 8px;
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  height: 100%;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  padding: 0 12px;
+  min-width: 120px;
+  max-width: 200px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.tab:hover {
+  opacity: 1;
+  background-color: var(--bg-secondary);
+}
+
+.tab.active {
+  background-color: var(--bg-secondary);
+  opacity: 1;
+  border-color: var(--border-color);
+}
+
+.tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--bg-secondary);
+  /* Hides border beneath */
+}
+
+.tab.active::before {
+  content: '';
+  position: absolute;
+  top: 0px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--accent-base);
+  border-radius: 6px 6px 0 0;
+}
+
+.tab-title {
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+.tab-close {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+}
+
+.tab-close:hover {
+  background-color: var(--accent-danger);
+  color: white;
+}
+
+.btn-new-tab {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  margin-left: 8px;
+  border-radius: 6px;
+}
+
+.btn-new-tab:hover {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+/* Editor container */
+.editor-container {
+  flex: 1;
+  background-color: var(--bg-secondary);
+  overflow: hidden;
+  position: relative;
+}
+
+#quill-editor {
+  height: 100%;
+  border: none !important;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 14px;
+}
+
+.ql-toolbar {
+  background-color: var(--bg-tertiary);
+  border-color: var(--border-color) !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-top: none !important;
+}
+
+.ql-stroke {
+  stroke: var(--text-secondary) !important;
+}
+
+.ql-fill {
+  fill: var(--text-secondary) !important;
+}
+
+.ql-picker-label {
+  color: var(--text-secondary) !important;
+}
+
+/* Custom Markdown/Log Blocks inside Quill */
+pre.log-block {
+  background-color: #000;
+  border: 1px solid var(--border-color);
+  padding: 1rem;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  color: #a6e22e;
+  /* green hacky tint */
+  overflow-x: auto;
+}

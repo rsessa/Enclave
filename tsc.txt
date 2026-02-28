@@ -1,0 +1,6 @@
+﻿src/lib/tabManager.ts(15,17): error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+src/main.ts(4,19): error TS6133: 'ask' is declared but its value is never read.
+src/main.ts(5,10): error TS2305: Module '"@tauri-apps/plugin-window"' has no exported member 'WebviewWindow'.
+src/main.ts(164,11): error TS6133: 'editorWin' is declared but its value is never read.
+src/main.ts(171,11): error TS6133: 'visorWin' is declared but its value is never read.
+src/structura-visor.ts(3,10): error TS2305: Module '"@tauri-apps/plugin-window"' has no exported member 'getCurrentWindow'.

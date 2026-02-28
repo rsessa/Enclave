@@ -1,0 +1,41 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "enables the default permissions",
+  "windows": [
+    "main",
+    "editor",
+    "visor"
+  ],
+  "permissions": [
+    "core:default",
+    {
+      "identifier": "fs:allow-read-text-file",
+      "allow": [
+        {
+          "path": "C:\\scripts\\DataAnalisis\\**"
+        }
+      ]
+    },
+    {
+      "identifier": "fs:allow-write-text-file",
+      "allow": [
+        {
+          "path": "C:\\scripts\\DataAnalisis\\**"
+        }
+      ]
+    },
+    {
+      "identifier": "fs:allow-read-dir",
+      "allow": [
+        {
+          "path": "C:\\scripts\\DataAnalisis\\**"
+        }
+      ]
+    },
+    "dialog:allow-ask",
+    "dialog:allow-message",
+    "dialog:allow-open",
+    "dialog:allow-save"
+  ]
+}
