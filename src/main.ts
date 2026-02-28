@@ -172,15 +172,19 @@ document.getElementById('btn-structura')?.addEventListener('click', async () => 
 // Listen for global insert-diagram events from old internal Structura
 listen('insert-diagram', (event) => {
   const svgContent = event.payload as string;
+  const base64Svg = btoa(unescape(encodeURIComponent(svgContent)));
+  const imgTag = `<img src="data:image/svg+xml;base64,${base64Svg}" style="display: block; margin: 20px auto; max-width: 100%;" />`;
   const range = quill.getSelection(true);
-  quill.clipboard.dangerouslyPasteHTML(range.index, `<div style="text-align: center; margin: 20px 0;">${svgContent}</div><br/>`);
+  quill.clipboard.dangerouslyPasteHTML(range.index, imgTag + '<br/>');
 });
 
 // Listen for External Structura Diagram Inbox updates
 listen('inbox-diagram-received', async (event) => {
   const svgContent = event.payload as string;
+  const base64Svg = btoa(unescape(encodeURIComponent(svgContent)));
+  const imgTag = `<img src="data:image/svg+xml;base64,${base64Svg}" style="display: block; margin: 10px auto; max-width: 100%;" />`;
   const range = quill.getSelection(true);
-  quill.clipboard.dangerouslyPasteHTML(range.index, `<div style="text-align: center; margin: 20px 0;">${svgContent}</div><br/>`);
+  quill.clipboard.dangerouslyPasteHTML(range.index, imgTag + '<br/>');
 
   // Show non-intrusive toast notification
   await message('Diagrama importado correctamente', { title: 'Buzón Structura', kind: 'info' });
