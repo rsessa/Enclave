@@ -3,6 +3,8 @@ import { TabManager } from './lib/tabManager';
 import { readTextFile, writeTextFile, readDir } from '@tauri-apps/plugin-fs';
 import { message } from '@tauri-apps/plugin-dialog';
 import { listen } from '@tauri-apps/api/event';
+import { open } from '@tauri-apps/plugin-dialog';
+import { readFile } from '@tauri-apps/plugin-fs';
 
 const BASE_DIR = "C:\\scripts\\DataAnalisis";
 
@@ -114,11 +116,32 @@ document.getElementById('btn-format-log')?.addEventListener('click', () => {
 
 document.getElementById('btn-copy')?.addEventListener('click', async () => {
   try {
-    await navigator.clipboard.writeText(quill.getText());
-    message('Content copied to clipboard', { title: 'Success', kind: 'info' });
+    const htmlContent = quill.root.innerHTML;
+    const textContent = quill.getText();
+
+    const htmlBlob = new Blob([htmlContent], { type: 'text/html' });
+    const textBlob = new Blob([textContent], { type: 'text/plain' });
+
+    const data = [new ClipboardItem({
+      'text/html': htmlBlob,
+      'text/plain': textBlob,
+    })];
+
+    await navigator.clipboard.write(data);
+    message('Contenido copiado (con formato e imágenes)', { title: 'Éxito', kind: 'info' });
   } catch (err) {
     console.error('Failed to copy', err);
+    message('Error al copiar contenido rico. Reintente.', { title: 'Error', kind: 'error' });
   }
+});
+
+document.getElementById('btn-breakout')?.addEventListener('click', () => {
+  const range = quill.getSelection(true);
+  // Insert a newline and a paragraph break after the current selection
+  quill.insertText(range.index, '\n', 'user');
+  quill.setSelection(range.index + 1, 0, 'user');
+  // Force a new paragraph by inserting a newline followed by any character or just ensuring cursor is out
+  // In Quill, '\n' usually creates a new block.
 });
 
 document.getElementById('btn-save-template')?.addEventListener('click', async () => {
@@ -211,6 +234,41 @@ listen('inbox-data-received', async (event) => {
   const title = isDiagram ? 'Buzón Structura' : 'Buzón PowerShell';
 
   await message(msg, { title, kind: 'info' });
+});
+
+// Custom Image Handler for Local Files
+const toolbar = quill.getModule('toolbar') as any;
+toolbar.addHandler('image', async () => {
+  try {
+    const selected = await open({
+      multiple: false,
+      filters: [{
+        name: 'Images',
+        extensions: ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg']
+      }]
+    });
+
+    if (selected && typeof selected === 'string') {
+      const fileData = await readFile(selected);
+      // Determine mime type from extension
+      const ext = selected.split('.').pop()?.toLowerCase();
+      const mime = ext === 'svg' ? 'image/svg+xml' : `image/${ext}`;
+
+      // Convert to Base64
+      const base64 = btoa(
+        new Uint8Array(fileData)
+          .reduce((data, byte) => data + String.fromCharCode(byte), '')
+      );
+
+      const range = quill.getSelection(true);
+      const imgTag = `<img src="data:${mime};base64,${base64}" style="max-width: 100%; display: block; margin: 10px auto;" />`;
+      quill.clipboard.dangerouslyPasteHTML(range.index, imgTag + '<br/>');
+      message('Imagen importada correctamente', { title: 'Éxito', kind: 'info' });
+    }
+  } catch (err: any) {
+    console.error('Image import failed', err);
+    message(`Error al importar imagen: ${err.message}`, { title: 'Error', kind: 'error' });
+  }
 });
 
 initApp();
