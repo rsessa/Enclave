@@ -165,7 +165,7 @@ document.getElementById('btn-structura')?.addEventListener('click', async () => 
     await invoke('launch_structura');
   } catch (error) {
     console.error("Failed to launch structura:", error);
-    await message(`Error al lanzar Structura.exe: ${error}`, { title: 'Structura', kind: 'error' });
+    await message(`Error al lanzar Structura-Portable.exe: ${error}`, { title: 'Structura', kind: 'error' });
   }
 });
 

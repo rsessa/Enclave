@@ -14,7 +14,7 @@ As a sister-application to **[Structura](https://github.com/Richard/Structura)**
 
 Enclave operates as a master orchestrator by continuously polling designated files inside `C:\scripts\DataAnalisis\` using a background Tokio thread:
 1. **PowerShell Text/Tables** (`inbox.html`): PowerShell scripts can output HTML directly to this file. Enclave intercepts, reads, displays at the cursor's location, and instantly deletes the file to avoid tracking.
-2. **Structura SVG Diagrams** (`inbox_diagram.svg`): Enclave launches the `Structura.exe` detached app. Structura generates visual Mermaid SVGs and drops them here. Enclave consumes the SVG visually and deletes the file.
+2. **Structura SVG Diagrams** (`inbox_diagram.svg`): Enclave launches the `Structura-Portable.exe` detached app. Structura generates visual Mermaid SVGs and drops them here. Enclave consumes the SVG visually and deletes the file.
 
 ## 🚀 Building Enclave
 

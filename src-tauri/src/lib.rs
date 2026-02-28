@@ -5,12 +5,12 @@ fn launch_structura(app_handle: tauri::AppHandle) -> Result<(), String> {
     // Get path to current executable
     let current_exe = std::env::current_exe().map_err(|e| e.to_string())?;
     
-    // Find Structura.exe in the same folder
+    // Find Structura-Portable.exe in the same folder
     let mut structura_path = current_exe.clone();
-    structura_path.set_file_name("Structura.exe");
+    structura_path.set_file_name("Structura-Portable.exe");
     
     if !structura_path.exists() {
-        return Err(format!("No se encontró Structura.exe en: {:?}", structura_path));
+        return Err(format!("No se encontró Structura-Portable.exe en: {:?}", structura_path));
     }
 
     // Launch detached
