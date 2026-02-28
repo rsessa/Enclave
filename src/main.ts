@@ -199,14 +199,18 @@ listen('inbox-diagram-received', async (event) => {
   await message('Diagrama importado correctamente', { title: 'Buzón Structura', kind: 'info' });
 });
 
-// Listen for PowerShell Inbox updates
+// Listen for PowerShell Inbox (or New Structura HTML) updates
 listen('inbox-data-received', async (event) => {
   const htmlContent = event.payload as string;
   const range = quill.getSelection(true);
   quill.clipboard.dangerouslyPasteHTML(range.index, htmlContent + '<br/>');
 
-  // Show non-intrusive toast notification
-  await message('Datos recibidos de PowerShell', { title: 'Buzón', kind: 'info' });
+  // If it contains an IMG tag, it's likely a diagram from Structura
+  const isDiagram = htmlContent.includes('<img');
+  const msg = isDiagram ? 'Diagrama recibido de Structura' : 'Datos recibidos de PowerShell';
+  const title = isDiagram ? 'Buzón Structura' : 'Buzón PowerShell';
+
+  await message(msg, { title, kind: 'info' });
 });
 
 initApp();

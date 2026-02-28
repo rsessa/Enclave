@@ -47,17 +47,21 @@ pub fn run() {
         let diagram_path = std::path::Path::new("C:\\scripts\\DataAnalisis\\inbox_diagram.svg");
 
         loop {
-            // Check PowerShell Text Inbox
+            // Priority 1: Check inbox.html (Can be PowerShell Table OR New Structura Diagram)
             if inbox_path.exists() {
                 if let Ok(content) = std::fs::read_to_string(inbox_path) {
                     if std::fs::remove_file(inbox_path).is_ok() {
                         let _ = app_handle.emit("inbox-data-received", content);
+                        
+                        // If this was a new Structura export, it likely also 
+                        // created a compatibility SVG. We delete it silently to prevent duplicates.
+                        if diagram_path.exists() {
+                            let _ = std::fs::remove_file(diagram_path);
+                        }
                     }
                 }
-            }
-            
-            // Check SVG Diagram Inbox
-            if diagram_path.exists() {
+            } else if diagram_path.exists() {
+                // Priority 2: Check SVG Diagram Inbox (Old Structura version compatibility)
                 if let Ok(content) = std::fs::read_to_string(diagram_path) {
                     if std::fs::remove_file(diagram_path).is_ok() {
                         let _ = app_handle.emit("inbox-diagram-received", content);
