@@ -6,9 +6,8 @@ fn launch_structura(app_handle: tauri::AppHandle, window: tauri::Window) -> Resu
     if let Ok(Some(monitor)) = window.current_monitor() {
         let size = monitor.size();
         let half_width = size.width / 2;
-        let height = size.height;
-        
-        let _ = window.set_size(tauri::PhysicalSize::new(half_width, height));
+        let full_height = size.height;
+        let _ = window.set_size(tauri::PhysicalSize::new(half_width, full_height));
         let _ = window.set_position(tauri::PhysicalPosition::new(0, 0));
     }
 
@@ -23,7 +22,7 @@ fn launch_structura(app_handle: tauri::AppHandle, window: tauri::Window) -> Resu
         return Err(format!("No se encontró Structura-Portable.exe en: {:?}", structura_path));
     }
 
-    // Launch detached with enclave-mode argument
+    // Launch detached
     Command::new(structura_path)
         .arg("--enclave-mode")
         .spawn()
