@@ -19,14 +19,14 @@ fn launch_structura(app_handle: tauri::AppHandle, window: tauri::Window) -> Resu
     structura_path.set_file_name("Structura-Portable.exe");
     
     if !structura_path.exists() {
-        return Err(format!("No se encontró Structura-Portable.exe en: {:?}", structura_path));
+        return Err(format!("Structura-Portable.exe was not found at: {:?}", structura_path));
     }
 
     // Launch detached
     Command::new(structura_path)
         .arg("--enclave-mode")
         .spawn()
-        .map_err(|e| format!("Error al lanzar Structura: {}", e))?;
+        .map_err(|e| format!("Error launching Structura: {}", e))?;
         
     Ok(())
 }
