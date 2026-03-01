@@ -13,8 +13,8 @@
     "windows": [
       {
         "title": "Enclave",
-        "width": 1024,
-        "height": 768,
+        "width": 1100,
+        "height": 800,
         "resizable": true,
         "fullscreen": false
       }

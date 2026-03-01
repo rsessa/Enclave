@@ -13,26 +13,56 @@
   <body>
     <div id="app" class="app-container">
       
-      <!-- Toolbar Area -->
-      <header class="top-toolbar">
-        <div class="brand">
+      <!-- Top Right Header: Theme Toggle -->
+      <div class="top-right-header">
+        <button id="btn-theme-toggle" class="btn" title="Toggle Light/Dark Mode">🌓</button>
+      </div>
+
+      <!-- Floating Sidebar -->
+      <aside class="floating-sidebar">
+        <div class="brand-vertical">
           <div class="lock-icon">🔒</div>
-          <h1>Enclave</h1>
         </div>
-        <div class="toolbar-actions">
-          <button id="btn-add-table" class="btn" title="Add Table">⊞</button>
-          <button id="btn-format-log" class="btn" title="Format Selected as Log">≢</button>
-          <button id="btn-breakout" class="btn" title="Exit Block/New Paragraph">↵</button>
-          <div class="divider"></div>
-          <button id="btn-copy" class="btn" title="Copy to Clipboard">📋</button>
-          <div class="divider"></div>
-          <button id="btn-save-template" class="btn" title="Save as Template">💾</button>
-          <button id="btn-load-template" class="btn" title="Load Template">📂</button>
-          <button id="btn-theme-toggle" class="btn" title="Toggle Light/Dark Mode">🌓</button>
-          <div class="divider"></div>
-          <button id="btn-structura" class="btn btn-accent" title="Launch Structura">S</button>
+        
+        <div class="sidebar-actions">
+          <!-- Table Popper -->
+          <div class="popover-container">
+            <button id="btn-add-table" class="btn" title="Añadir Tabla">⊞</button>
+            <div class="popover-content table-grid-popover">
+              <div id="table-grid-container" class="table-grid"></div>
+              <div id="table-grid-label" class="table-grid-label">0x0</div>
+            </div>
+          </div>
+          
+          <!-- Format Dropdown -->
+          <div class="popover-container format-dropdown-container">
+            <button id="btn-format-menu" class="btn" title="Formato / Log">≢</button>
+            <div id="format-dropdown" class="popover-content dropdown-menu">
+              <button id="btn-bold" class="dropdown-item"><strong>B</strong> Negrita</button>
+              <button id="btn-italic" class="dropdown-item"><em>I</em> Cursiva</button>
+              <button id="btn-underline" class="dropdown-item"><u>U</u> Subrayado</button>
+              <button id="btn-code" class="dropdown-item"><code>&lt;/&gt;</code> Código en línea</button>
+              <div class="dropdown-divider"></div>
+              <button id="btn-format-log" class="dropdown-item accent">≢ Formatear Log Seleccionado</button>
+            </div>
+          </div>
+
+          <button id="btn-breakout" class="btn" title="Salir de Bloque / Nuevo Párrafo">↵</button>
+          
+          <div class="sidebar-divider"></div>
+          
+          <button id="btn-copy" class="btn" title="Copiar al Portapapeles">📋</button>
+          
+          <div class="sidebar-divider"></div>
+          
+          <button id="btn-save-template" class="btn" title="Guardar Plantilla">💾</button>
+          <button id="btn-load-template" class="btn" title="Cargar Plantilla">📂</button>
+          
+          <div class="sidebar-divider"></div>
+          
+          <button id="btn-structura" class="btn btn-accent" title="Lanzar Structura">S</button>
         </div>
-      </header>
+      </aside>
       
       <!-- Tab Strip -->
       <nav class="tab-strip">

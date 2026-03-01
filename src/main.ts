@@ -91,15 +91,86 @@ btnNewTab.addEventListener('click', async () => {
 
 // Toolbar Actions
 
-document.getElementById('btn-add-table')?.addEventListener('click', () => {
-  const range = quill.getSelection(true);
-  const tableHtml = `
-    <table border="1" style="width: 100%; border-collapse: collapse; margin-top: 10px;">
-      <tr><th>Header 1</th><th>Header 2</th></tr>
-      <tr><td>Data</td><td>Data</td></tr>
-    </table><br/>
-  `;
-  quill.clipboard.dangerouslyPasteHTML(range.index, tableHtml);
+// Interactive Table Inserter Grid
+const tableGridContainer = document.getElementById('table-grid-container');
+const tableGridLabel = document.getElementById('table-grid-label');
+
+if (tableGridContainer && tableGridLabel) {
+  for (let r = 0; r < 10; r++) {
+    for (let c = 0; c < 10; c++) {
+      const cell = document.createElement('div');
+      cell.className = 'grid-cell';
+      cell.dataset.row = (r + 1).toString();
+      cell.dataset.col = (c + 1).toString();
+
+      cell.addEventListener('mouseover', () => {
+        const rows = r + 1;
+        const cols = c + 1;
+        tableGridLabel.textContent = `${rows}x${cols}`;
+
+        Array.from(tableGridContainer.children).forEach((child: Element) => {
+          const cr = parseInt((child as HTMLElement).dataset.row || '0');
+          const cc = parseInt((child as HTMLElement).dataset.col || '0');
+          if (cr <= rows && cc <= cols) {
+            child.classList.add('highlight');
+          } else {
+            child.classList.remove('highlight');
+          }
+        });
+      });
+
+      cell.addEventListener('click', () => {
+        const rows = r + 1;
+        const cols = c + 1;
+        const range = quill.getSelection(true);
+
+        // Build table HTML
+        let tableHtml = '<table border="1" style="width: 100%; border-collapse: collapse; margin-top: 10px;">';
+        for (let i = 0; i < rows; i++) {
+          tableHtml += '<tr>';
+          for (let j = 0; j < cols; j++) {
+            tableHtml += i === 0 ? '<th>Header</th>' : '<td>Data</td>';
+          }
+          tableHtml += '</tr>';
+        }
+        tableHtml += '</table><br/>';
+
+        quill.clipboard.dangerouslyPasteHTML(range.index, tableHtml);
+
+        // Hide popover by blurring or programmatic toggle
+        const popoverContent = document.querySelector('.table-grid-popover') as HTMLElement;
+        if (popoverContent) {
+          popoverContent.classList.remove('active');
+          setTimeout(() => {
+            // Reset grid highlight and popover state
+            Array.from(tableGridContainer.children).forEach(c => c.classList.remove('highlight'));
+            tableGridLabel.textContent = '0x0';
+          }, 300);
+        }
+      });
+
+      tableGridContainer.appendChild(cell);
+    }
+  }
+}
+
+// Format Dropdown Actions
+document.getElementById('btn-bold')?.addEventListener('click', () => {
+  const currentFormat = quill.getFormat();
+  quill.format('bold', !currentFormat.bold);
+});
+document.getElementById('btn-italic')?.addEventListener('click', () => {
+  const currentFormat = quill.getFormat();
+  quill.format('italic', !currentFormat.italic);
+});
+document.getElementById('btn-underline')?.addEventListener('click', () => {
+  const currentFormat = quill.getFormat();
+  quill.format('underline', !currentFormat.underline);
+});
+document.getElementById('btn-code')?.addEventListener('click', () => {
+  const currentFormat = quill.getFormat();
+  // Quill code format requires index/length if no selection, but format() on its own toggles for selection
+  quill.format('code', !currentFormat.code);
 });
 
 document.getElementById('btn-format-log')?.addEventListener('click', () => {
@@ -180,13 +251,25 @@ document.getElementById('btn-load-template')?.addEventListener('click', async ()
   }
 });
 
-// Theme Toggle Logic
-document.getElementById('btn-theme-toggle')?.addEventListener('click', () => {
+// Theme Toggle Logic & Persistence
+const btnThemeToggle = document.getElementById('btn-theme-toggle');
+
+// Load theme preference
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'light') {
+  document.body.classList.add('light-mode');
+  if (btnThemeToggle) btnThemeToggle.textContent = '🌙';
+} else {
+  // Default dark
+  if (btnThemeToggle) btnThemeToggle.textContent = '🌓';
+}
+
+btnThemeToggle?.addEventListener('click', () => {
   const isLight = document.body.classList.toggle('light-mode');
-  const btn = document.getElementById('btn-theme-toggle');
-  if (btn) {
-    btn.textContent = isLight ? '🌙' : '🌓';
+  if (btnThemeToggle) {
+    btnThemeToggle.textContent = isLight ? '🌙' : '🌓';
   }
+  localStorage.setItem('theme', isLight ? 'light' : 'dark');
 });
 
 import { invoke } from '@tauri-apps/api/core';
