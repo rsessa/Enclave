@@ -10,13 +10,18 @@ As a master orchestrator for **[Structura](https://github.com/Richard/Structura)
 - **In-Memory Encryption**: Tab switching triggers AES-GCM encryption of DOM trees (`window.crypto.subtle`). Only the currently viewed tab exists as plain text in memory.
 - **Strict File System Control**: Reading and saving templates is hardcoded and locked strictly to `C:\scripts\DataAnalisis\**`. 
 
+## ✨ New in v0.4.0
+- **🌐 Full English Localization**: The entire application and configuration are fully translated into English.
+- **📋 Copy Restored**: Restored and improved the copy button functionality for code blocks.
+- **📖 Documentation Link**: Added a quick-access button to the Mermaid documentation from within the editor.
+
 ## ✨ New in v0.2.0
 - **🌓 Light/Dark Mode**: Premium engineering themes with smooth transitions.
 - **📋 Rich Clipboard**: Copy content as `text/html`. Paste diagrams and formatted tables directly into Outlook, Word, or Teams.
 - **🖼️ Native Image Importer**: Securely import local images (`.png`, `.jpg`, `.svg`) via Windows File Picker. Images are converted to Base64 for zero-footprint storage.
 - **↵ Breakout Logic**: Dedicated toolbar button to escape code blocks or tables and continue writing in a new paragraph.
 
-## ⚙️ Integrations & "The Inbox" (Buzón)
+## ⚙️ Integrations & "The Inbox"
 
 Enclave operates as a master orchestrator by continuously polling designated files inside `C:\scripts\DataAnalisis\`:
 1. **PowerShell Text/Tables** (`inbox.html`): PowerShell scripts can output HTML directly to this file. Enclave intercepts, reads, displays at the cursor's location, and instantly deletes the file.
