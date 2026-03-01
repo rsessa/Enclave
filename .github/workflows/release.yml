@@ -38,3 +38,4 @@ jobs:
           releaseBody: "First public release of Enclave - Secure Ephemeral Documentation App."
           releaseDraft: false
           prerelease: false
+          includeRelease: true
