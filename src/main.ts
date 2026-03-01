@@ -8,16 +8,11 @@ import { readFile } from '@tauri-apps/plugin-fs';
 
 const BASE_DIR = "C:\\scripts\\DataAnalisis";
 
-// Initialize Quill Editor
+// Initialize Quill Editor (No default toolbar module)
 const quill = new Quill('#quill-editor', {
   theme: 'snow',
   modules: {
-    toolbar: [
-      [{ header: [1, 2, 3, false] }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ list: 'ordered' }, { list: 'bullet' }],
-      ['code-block', 'image'],
-    ],
+    toolbar: false, // Completely disable default UI toolbar
   },
 });
 
@@ -173,6 +168,26 @@ document.getElementById('btn-code')?.addEventListener('click', () => {
   quill.format('code', !currentFormat.code);
 });
 
+// New Lists and Indentation Features
+document.getElementById('btn-list-ol')?.addEventListener('click', () => {
+  quill.format('list', 'ordered');
+});
+document.getElementById('btn-list-ul')?.addEventListener('click', () => {
+  quill.format('list', 'bullet');
+});
+document.getElementById('btn-indent-inc')?.addEventListener('click', () => {
+  const currentFormat = quill.getFormat();
+  const currentIndent = parseInt(currentFormat.indent as any || '0');
+  quill.format('indent', currentIndent + 1);
+});
+document.getElementById('btn-indent-dec')?.addEventListener('click', () => {
+  const currentFormat = quill.getFormat();
+  let currentIndent = parseInt(currentFormat.indent as any || '0');
+  if (currentIndent > 0) {
+    quill.format('indent', currentIndent - 1);
+  }
+});
+
 document.getElementById('btn-format-log')?.addEventListener('click', () => {
   const range = quill.getSelection();
   if (range && range.length > 0) {
@@ -183,6 +198,13 @@ document.getElementById('btn-format-log')?.addEventListener('click', () => {
   } else {
     message('Please select text to format as log.', { title: 'Enclave', kind: 'info' });
   }
+});
+
+// Highlight Block Injection
+document.getElementById('btn-add-paragraph')?.addEventListener('click', () => {
+  const range = quill.getSelection(true);
+  const blockHtml = `<div class="highlight-block">Párrafo destacado...</div><br/>`;
+  quill.clipboard.dangerouslyPasteHTML(range.index, blockHtml);
 });
 
 document.getElementById('btn-copy')?.addEventListener('click', async () => {
@@ -252,22 +274,25 @@ document.getElementById('btn-load-template')?.addEventListener('click', async ()
 });
 
 // Theme Toggle Logic & Persistence
-const btnThemeToggle = document.getElementById('btn-theme-toggle');
+const btnThemeToggle = document.getElementById('btn-theme-toggle') as HTMLInputElement;
 
 // Load theme preference
 const savedTheme = localStorage.getItem('theme');
 if (savedTheme === 'light') {
   document.body.classList.add('light-mode');
-  if (btnThemeToggle) btnThemeToggle.textContent = '🌙';
+  if (btnThemeToggle) btnThemeToggle.checked = true;
 } else {
   // Default dark
-  if (btnThemeToggle) btnThemeToggle.textContent = '🌓';
+  if (btnThemeToggle) btnThemeToggle.checked = false;
 }
 
-btnThemeToggle?.addEventListener('click', () => {
-  const isLight = document.body.classList.toggle('light-mode');
-  if (btnThemeToggle) {
-    btnThemeToggle.textContent = isLight ? '🌙' : '🌓';
+btnThemeToggle?.addEventListener('change', (e: Event) => {
+  const target = e.target as HTMLInputElement;
+  const isLight = target.checked;
+  if (isLight) {
+    document.body.classList.add('light-mode');
+  } else {
+    document.body.classList.remove('light-mode');
   }
   localStorage.setItem('theme', isLight ? 'light' : 'dark');
 });

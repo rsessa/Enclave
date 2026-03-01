@@ -15,7 +15,10 @@
       
       <!-- Top Right Header: Theme Toggle -->
       <div class="top-right-header">
-        <button id="btn-theme-toggle" class="btn" title="Toggle Light/Dark Mode">🌓</button>
+        <label class="theme-switch" for="btn-theme-toggle" title="Toggle Light/Dark Mode">
+          <input type="checkbox" id="btn-theme-toggle" />
+          <span class="slider round"></span>
+        </label>
       </div>
 
       <!-- Floating Sidebar -->
@@ -43,10 +46,17 @@
               <button id="btn-underline" class="dropdown-item"><u>U</u> Subrayado</button>
               <button id="btn-code" class="dropdown-item"><code>&lt;/&gt;</code> Código en línea</button>
               <div class="dropdown-divider"></div>
+              <button id="btn-list-ol" class="dropdown-item">1. Lista Ordenada</button>
+              <button id="btn-list-ul" class="dropdown-item">• Lista Desordenada</button>
+              <div class="dropdown-divider"></div>
+              <button id="btn-indent-inc" class="dropdown-item">→ Aumentar Sangría</button>
+              <button id="btn-indent-dec" class="dropdown-item">← Reducir Sangría</button>
+              <div class="dropdown-divider"></div>
               <button id="btn-format-log" class="dropdown-item accent">≢ Formatear Log Seleccionado</button>
             </div>
           </div>
 
+          <button id="btn-add-paragraph" class="btn" title="Añadir Párrafo Destacado">¶</button>
           <button id="btn-breakout" class="btn" title="Salir de Bloque / Nuevo Párrafo">↵</button>
           
           <div class="sidebar-divider"></div>
