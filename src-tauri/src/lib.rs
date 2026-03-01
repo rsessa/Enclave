@@ -1,7 +1,17 @@
 #[tauri::command]
-fn launch_structura(app_handle: tauri::AppHandle) -> Result<(), String> {
+fn launch_structura(app_handle: tauri::AppHandle, window: tauri::Window) -> Result<(), String> {
     use std::process::Command;
     
+    // Auto-tiling: Enclave occupies the left half of the screen
+    if let Ok(Some(monitor)) = window.current_monitor() {
+        let size = monitor.size();
+        let half_width = size.width / 2;
+        let height = size.height;
+        
+        let _ = window.set_size(tauri::PhysicalSize::new(half_width, height));
+        let _ = window.set_position(tauri::PhysicalPosition::new(0, 0));
+    }
+
     // Get path to current executable
     let current_exe = std::env::current_exe().map_err(|e| e.to_string())?;
     
@@ -13,8 +23,9 @@ fn launch_structura(app_handle: tauri::AppHandle) -> Result<(), String> {
         return Err(format!("No se encontró Structura-Portable.exe en: {:?}", structura_path));
     }
 
-    // Launch detached
+    // Launch detached with enclave-mode argument
     Command::new(structura_path)
+        .arg("--enclave-mode")
         .spawn()
         .map_err(|e| format!("Error al lanzar Structura: {}", e))?;
         
